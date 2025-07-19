@@ -1,16 +1,17 @@
 import { useState, useEffect } from 'react';
-import { useWebSocket }        from './hooks/useWebSocket';
+import { useWebSocket } from './hooks/useWebSocket';
 
-import SymbolSelector   from './components/SymbolSelector';
-import ChartGrid        from './components/ChartGrid';
-import ChartCard        from './components/ChartCard';
+import SymbolSelector from './components/SymbolSelector';
+import ThemeToggle    from './components/ThemeToggle';
 
+import ChartCard         from './components/ChartCard';
 import ClosingPriceLine  from './components/charts/ClosingPriceLine';
 import ChangePercentLine from './components/charts/ChangePercentLine';
 import VolumeBar         from './components/charts/VolumeBar';
 import VolPercentBar     from './components/charts/VolPercentBar';
 
 export default function App() {
+
   const { history: wsHistory, isConnected } = useWebSocket('ws://localhost:8080');
 
   const symbols = Object.keys(wsHistory);
@@ -25,40 +26,51 @@ export default function App() {
   const data = wsHistory[symbol] || [];
 
   return (
-    
-    <div className="p-6 space-y-6 min-h-screen bg-gray-50 bg-gray-500">
-      <header className="flex flex-wrap items-center gap-4">
-        <h1 className="text-xl font-bold">📡 داشبورد قیمت زنده</h1>
+    <>
+      <header
+        className="
+          fixed inset-x-0 top-0 z-50
+          flex items-center gap-3
+          px-4 py-3 backdrop-blur
+          bg-[rgba(31,35,61,0.9)] dark:bg-[rgba(15,17,30,0.9)]
+        "
+      >
+        <span
+          className={`
+            w-3 h-3 rounded-full
+            ${isConnected ? 'bg-green-400 animate-ping-slow' : 'bg-red-400'}
+          `}
+        />
 
-        <SymbolSelector symbols={symbols} value={symbol} onChange={setSymbol} />
+        <ThemeToggle />
 
-        <span className="text-sm">
-          وضعیت اتصال:
-          {isConnected ? (
-            <span className="text-green-600 font-semibold"> ✅ وصل</span>
-          ) : (
-            <span className="text-red-600 font-semibold"> ❌ قطع</span>
-          )}
-        </span>
+        <SymbolSelector
+          symbols={symbols}
+          value={symbol}
+          onChange={setSymbol}
+          className="flex-1 mr-auto"
+        />
       </header>
 
-      <ChartGrid>
-        <ChartCard title="قیمت پایانی">
-          <ClosingPriceLine data={data} />
-        </ChartCard>
+      <main className="pt-20 p-6 space-y-6 min-h-screen">
+        <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
+          <ChartCard title="قیمت پایانی">
+            <ClosingPriceLine data={data} />
+          </ChartCard>
 
-        <ChartCard title="درصد تغییر قیمت">
-          <ChangePercentLine data={data} />
-        </ChartCard>
+          <ChartCard title="درصد تغییر قیمت">
+            <ChangePercentLine data={data} />
+          </ChartCard>
 
-        <ChartCard title="حجم معاملات">
-          <VolumeBar data={data} />
-        </ChartCard>
+          <ChartCard title="حجم معاملات">
+            <VolumeBar data={data} />
+          </ChartCard>
 
-        <ChartCard title="درصد حجم مبنا">
-          <VolPercentBar data={data} />
-        </ChartCard>
-      </ChartGrid>
-    </div>
+          <ChartCard title="درصد حجم مبنا">
+            <VolPercentBar data={data} />
+          </ChartCard>
+        </div>
+      </main>
+    </>
   );
 }
