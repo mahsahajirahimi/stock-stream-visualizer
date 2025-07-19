@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
-import { useWebSocket }       from './hooks/useWebSocket';
+import { useWebSocket }        from './hooks/useWebSocket';
 
-import SymbolSelector        from './components/SymbolSelector';
-import ClosingPriceLine      from './components/charts/ClosingPriceLine';
-import ChangePercentLine     from './components/charts/ChangePercentLine';
-import VolumeBar             from './components/charts/VolumeBar';
-import VolPercentBar         from './components/charts/VolPercentBar';
+import SymbolSelector   from './components/SymbolSelector';
+import ChartGrid        from './components/ChartGrid';
+import ChartCard        from './components/ChartCard';
+
+import ClosingPriceLine  from './components/charts/ClosingPriceLine';
+import ChangePercentLine from './components/charts/ChangePercentLine';
+import VolumeBar         from './components/charts/VolumeBar';
+import VolPercentBar     from './components/charts/VolPercentBar';
 
 export default function App() {
-
   const { history: wsHistory, isConnected } = useWebSocket('ws://localhost:8080');
 
   const symbols = Object.keys(wsHistory);
@@ -23,29 +25,40 @@ export default function App() {
   const data = wsHistory[symbol] || [];
 
   return (
-    <div className="p-6 space-y-6 min-h-screen bg-gray-50">
-      <header className="flex items-center flex-wrap gap-4">
+
+    <div className="p-6 space-y-6 min-h-screen bg-gray-50 bg-gray-500">
+      <header className="flex flex-wrap items-center gap-4">
         <h1 className="text-xl font-bold">📡 داشبورد قیمت زنده</h1>
 
         <SymbolSelector symbols={symbols} value={symbol} onChange={setSymbol} />
 
         <span className="text-sm">
-          وضعیت اتصال:&nbsp;
+          وضعیت اتصال:
           {isConnected ? (
-            <span className="text-green-600 font-semibold">✅ وصل</span>
+            <span className="text-green-600 font-semibold"> ✅ وصل</span>
           ) : (
-            <span className="text-red-600 font-semibold">❌ قطع</span>
+            <span className="text-red-600 font-semibold"> ❌ قطع</span>
           )}
         </span>
       </header>
 
-      <ClosingPriceLine data={data} />
+      <ChartGrid>
+        <ChartCard title="قیمت پایانی">
+          <ClosingPriceLine data={data} />
+        </ChartCard>
 
-      <ChangePercentLine data={data} />
+        <ChartCard title="درصد تغییر قیمت">
+          <ChangePercentLine data={data} />
+        </ChartCard>
 
-      <VolumeBar data={data} />
+        <ChartCard title="حجم معاملات">
+          <VolumeBar data={data} />
+        </ChartCard>
 
-      <VolPercentBar data={data} />
+        <ChartCard title="درصد حجم مبنا">
+          <VolPercentBar data={data} />
+        </ChartCard>
+      </ChartGrid>
     </div>
   );
 }
