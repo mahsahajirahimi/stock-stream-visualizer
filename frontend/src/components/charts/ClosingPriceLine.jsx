@@ -1,35 +1,30 @@
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip } from 'recharts';
-import { chartColors } from '../../theme';
+import { theme } from '../../theme';         
 
-export default function ClosingPriceLine({ data }) {
-  if (!data.length) return null;
+export default function ClosingPriceLine({ data = [] }) {
+  const {border, cardBg, text } = theme.colors;  
 
   return (
-    <div className="bg-transparent p-4 rounded shadow">
-      <h2 className="font-semibold mb-2">قیمت پایانی (آخرین ۳۰ نقطه)</h2>
-      <ResponsiveContainer width="100%" height={220}>
-        <LineChart data={data}>
-          <XAxis
-            dataKey="t"
-            hide
-          />
-          <YAxis
-            domain={['auto', 'auto']}
-            width={60}
-          />
-          <Tooltip
-            labelFormatter={() => ''}
-            formatter={(v) => v.toLocaleString()}
-          />
-          <Line
-            type="monotone"
-            dataKey="price"
-            stroke={chartColors.closingPrice}
-            strokeWidth={3.5}
-            dot={false}
-          />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
+    <ResponsiveContainer width="100%" height={260}>
+      <LineChart data={data}>
+        <XAxis dataKey="t" hide />
+        <YAxis
+          width={40}
+          stroke={border}
+          tick={{ fill: border }}
+        />
+        <Tooltip
+          cursor={false} 
+          contentStyle={{ background: cardBg, border: 'none', color: text }}
+        />
+        <Line
+          dataKey="price"
+          stroke="var(--chart-change)"
+          strokeWidth={3}
+          dot={false}
+          isAnimationActive={false}
+        />
+      </LineChart>
+    </ResponsiveContainer>
   );
 }

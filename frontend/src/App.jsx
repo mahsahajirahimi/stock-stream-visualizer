@@ -34,11 +34,13 @@ export default function App() {
           px-4 py-3 backdrop-blur
           bg-[rgba(31,35,61,0.9)] dark:bg-[rgba(15,17,30,0.9)]
         "
+        style={{ background: "var(--header-bg)" }}  
       >
+      
         <span
           className={`
             w-3 h-3 rounded-full
-            ${isConnected ? 'bg-green-400 animate-ping-slow' : 'bg-red-400'}
+            ${isConnected ? 'bg-green-600 animate-ping-slow' : 'bg-red-600'}
           `}
         />
 

@@ -22,7 +22,7 @@ export default function ThemeToggle() {
       <span
         className={`
           absolute inset-0 rounded-full transition-colors ${speed}
-          ${dark ? 'bg-indigo-600/70' : 'bg-amber-400/70'}
+          ${dark ? 'bg-indigo-600/70' : 'bg-amber-300/90'}
         `}
       />
 

@@ -1,16 +1,13 @@
-import { uiColors } from '../theme';
+import React from "react"; 
 
 export default function ChartCard({ title, children }) {
-  return (
-    <div
-      className="w-full h-full rounded-2xl shadow-lg flex flex-col"
-      style={{
-        background: uiColors.cardBg,         
-        boxShadow: `0 8px 20px ${uiColors.cardShadow}`,
-      }}
-    >
-      <h2 className="font-semibold mb-2 px-5 pt-5">{title}</h2>
-      <div className="flex-1 px-5 pb-5 bg-transparent">{children}</div>
-    </div>
-  );
-}
+    return (
+      <div className="rounded-xl shadow-lg p-4 bg-[var(--card-bg)] text-[var(--text-main)]">
+        <div className="flex justify-center items-center mb-2">
+          <h2 className="text-lg font-semibold">{title}</h2>
+        </div>
+        {children}
+      </div>
+    );
+  }
+  

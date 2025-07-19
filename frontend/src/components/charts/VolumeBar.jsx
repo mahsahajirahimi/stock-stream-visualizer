@@ -1,39 +1,15 @@
-import {
-    ResponsiveContainer,
-    BarChart,
-    Bar,
-    XAxis,
-    YAxis,
-    Tooltip,
-  } from 'recharts';
-import { chartColors } from '../../theme'; 
-  
-  export default function VolumeBar({ data }) {
-    if (!data.length) return null;
-  
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
+
+export default function VolumeBar({ data = [] }) {
     return (
-      <div className="bg-transparent p-4 rounded shadow">
-        <h2 className="font-semibold mb-2">حجم معاملات (میلیون سهم)</h2>
-  
-        <ResponsiveContainer width="100%" height={220}>
-          <BarChart data={data}>
-            <XAxis dataKey="t" hide />
-            <YAxis
-              width={60}
-              domain={['auto', 'auto']}
-              tickFormatter={(v) => v.toLocaleString()}
-            />
-            <Tooltip
-              formatter={(v) => `${v.toLocaleString()} م`}
-              labelFormatter={() => ''}
-            />
-            <Bar 
-            dataKey="vol" 
-            fill={chartColors.volume}
-            />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
+      <ResponsiveContainer width="100%" height={280}>
+        <BarChart data={data}>
+          <XAxis dataKey="t" hide />
+          <YAxis width={40} stroke="var(--text-muted)" />
+          <Tooltip cursor={false} contentStyle={{ background:"var(--card-bg)", border:"1px solid var(--border)" }}/>
+          <Bar dataKey="vol" fill="var(--chart-volume)" />
+        </BarChart>
+      </ResponsiveContainer>
     );
   }
   

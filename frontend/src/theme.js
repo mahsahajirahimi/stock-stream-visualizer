@@ -1,24 +1,18 @@
-export const uiColors = {
-
-    bodyFrom:  '#1c2140',
-    bodyTo:    '#262b4a',
-
-    cardBg:     '#1f233d',
-    cardShadow: 'rgba(0,0,0,0.35)',
-
-    text:    '#f3f4ff',
-    subText: '#a1a4c7',
-  
-    closingPrice:  '#7f5af0', 
-    volume:        '#ff6b9c',  
-    volPercent:    '#4f46e5', 
-
-    changePos:  '#4ade80',     
-    changeNeg:  '#fb7185',    
-    changeZero: '#facc15',     
+export const theme = {
+    get colors() {
+      const css = getComputedStyle(document.documentElement);
+      const pick = (v) => css.getPropertyValue(v).trim();
+      return {
+        primary:   pick('--primary'),
+        secondary: pick('--secondary'),
+        text:      pick('--text-main'),
+        muted:     pick('--text-muted'),
+        cardBg:    pick('--card-bg'),
+        border:    pick('--border'),
+        chartA:    pick('--chart-a'),
+        chartB:    pick('--chart-b'),
+        chartC:    pick('--chart-c'),
+      };
+    },
   };
-
-
-export const chartColors = uiColors;  
-
   
