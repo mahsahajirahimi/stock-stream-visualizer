@@ -6,12 +6,13 @@ import {
     YAxis,
     Tooltip,
   } from 'recharts';
+import { chartColors } from '../../theme'; 
   
   export default function VolumeBar({ data }) {
     if (!data.length) return null;
   
     return (
-      <div className="bg-white p-4 rounded shadow">
+      <div className="bg-transparent p-4 rounded shadow">
         <h2 className="font-semibold mb-2">حجم معاملات (میلیون سهم)</h2>
   
         <ResponsiveContainer width="100%" height={220}>
@@ -26,7 +27,10 @@ import {
               formatter={(v) => `${v.toLocaleString()} م`}
               labelFormatter={() => ''}
             />
-            <Bar dataKey="vol" />
+            <Bar 
+            dataKey="vol" 
+            fill={chartColors.volume}
+            />
           </BarChart>
         </ResponsiveContainer>
       </div>

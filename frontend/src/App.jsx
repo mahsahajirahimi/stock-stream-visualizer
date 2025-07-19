@@ -25,7 +25,7 @@ export default function App() {
   const data = wsHistory[symbol] || [];
 
   return (
-
+    
     <div className="p-6 space-y-6 min-h-screen bg-gray-50 bg-gray-500">
       <header className="flex flex-wrap items-center gap-4">
         <h1 className="text-xl font-bold">📡 داشبورد قیمت زنده</h1>

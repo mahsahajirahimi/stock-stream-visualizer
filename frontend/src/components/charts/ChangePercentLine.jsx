@@ -1,40 +1,71 @@
 import {
-    ResponsiveContainer,
     LineChart,
     Line,
     XAxis,
     YAxis,
     Tooltip,
+    ResponsiveContainer,
   } from 'recharts';
+  import { uiColors } from '../../theme';
   
-  export default function ChangePercentLine({ data }) {
-    if (!data.length) return null;
+  const LINE_COLOR = uiColors.accent ?? '#8b5cf6';
+
+  const PAD_Y = 0.002; 
+  
+  export default function ChangePercentLine({ data = [] }) {
+    const series = data.map((d) => ({
+      ...d,
+      pct:
+        d.price && typeof d.last === 'number'
+          ? (d.last - d.price) / d.price
+          : 0,
+    }));
+  
+    if (series.length < 2) return <div className="h-[220px]" />;
+  
+    const vals = series.map((s) => s.pct);
+    const min  = Math.min(...vals);
+    const max  = Math.max(...vals);
+    const domain =
+      Math.abs(max - min) < 1e-6
+        ? [min - PAD_Y, max + PAD_Y]
+        : ['auto', 'auto'];
   
     return (
-      <div className="bg-white p-4 rounded shadow">
-        <h2 className="font-semibold mb-2">درصد تغییر قیمت پایانی</h2>
+      <ResponsiveContainer width="100%" height={220}>
+        <LineChart data={series}>
+          <XAxis dataKey="t" hide />
+          <YAxis
+            domain={domain}
+            tickFormatter={(v) => `${(v * 100).toFixed(1)}%`}
+            width={36}
+          />
+          <Tooltip
+            contentStyle={{
+              background: uiColors.cardBg,
+              border: 'none',
+              color: uiColors.text,
+            }}
+            formatter={(v) => `${(v * 100).toFixed(2)}%`}
+            labelFormatter={(ts) =>
+              new Intl.DateTimeFormat('fa-IR', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+              }).format(ts)
+            }
+          />
   
-        <ResponsiveContainer width="100%" height={220}>
-          <LineChart data={data}>
-            <XAxis dataKey="t" hide />
-            <YAxis
-              domain={['auto', 'auto']}
-              width={60}
-              tickFormatter={(v) => `${v}%`}
-            />
-            <Tooltip
-              formatter={(v) => `${v}%`}
-              labelFormatter={() => ''}
-            />
-            <Line
-              type="monotone"
-              dataKey="change"
-              strokeWidth={2}
-              dot={false}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
+          <Line
+            type="monotone"
+            dataKey="pct"
+            stroke={LINE_COLOR}
+            strokeWidth={2}
+            dot={false}
+            isAnimationActive={false}
+          />
+        </LineChart>
+      </ResponsiveContainer>
     );
   }
   
