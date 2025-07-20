@@ -1,6 +1,6 @@
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
 import { JSX } from 'react';
-import { DataPoint } from '../../types';
+import { DataPoint } from '@/types';
 
 interface Props {
   data?: DataPoint[];

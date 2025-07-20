@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef, } from 'react';
 import { toast } from 'react-toastify';
-import { parseMessage } from '../utils/parseMessage';
-import { JSX, ReactNode } from 'react';
+import { parseMessage } from '@/utils/parseMessage';
 
 const MAX_POINTS = 30;
 

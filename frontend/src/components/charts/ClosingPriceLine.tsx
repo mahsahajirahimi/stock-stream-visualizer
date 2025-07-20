@@ -1,7 +1,7 @@
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip } from 'recharts';
-import { theme } from '../../theme';
+import { theme } from '@/theme';
 import { JSX } from 'react';
-import { DataPoint } from '../../types';
+import { DataPoint } from '@/types';
 
 interface Props {
   data?: DataPoint[];
