@@ -28,8 +28,11 @@ export default function ChangePercentLine({ data = [] }: Props): JSX.Element {
         />
         <Tooltip
           cursor={false}
-          contentStyle={{ background: cardBg, border: 'none', color: text }}
-          formatter={(v: number) => (v as number * 100).toFixed(2) + '%'}
+          contentStyle={{
+            background: cardBg,
+            border: 'none',
+            color: text,
+          }}
         />
         <Line
           dataKey="pct"

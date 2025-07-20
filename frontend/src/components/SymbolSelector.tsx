@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 interface Props {
   symbols: string[];
-  value:   string;
+  value: string;
   onChange: (symbol: string) => void;
   className?: string;
 }
@@ -46,7 +46,8 @@ export default function SymbolSelector({
         className={`
           flex items-center justify-between gap-2
           px-3 py-[6px] rounded-md text-sm
-          symbol-button
+          border border-[var(--border)] bg-[var(--card-bg)] text-[var(--text-main)]
+          hover:bg-[var(--dd-hover)] transition-colors
           ${className}
         `}
       >
@@ -65,27 +66,37 @@ export default function SymbolSelector({
       {open && (
         <ul
           role="listbox"
-          className="symbol-dropdown"
+          className={`
+            absolute z-50 mt-1 w-full max-h-48 overflow-auto rounded-md
+            bg-[var(--dd-bg)] shadow-lg border border-[var(--border)]
+          `}
         >
-          {symbols.map((s) => (
-            <li key={s}>
-              <button
-                type="button"
-                role="option"
-                aria-selected={s === value}
-                onClick={() => {
-                  onChange(s);
-                  setOpen(false);
-                }}
-                className={`
-                  w-full text-right px-3 py-2 rounded text-sm
-                  ${s === value ? 'symbol-active' : 'symbol-option'}
-                `}
-              >
-                {s}
-              </button>
-            </li>
-          ))}
+          {symbols.map((s) => {
+            const isSelected = s === value;
+            return (
+              <li key={s}>
+                <button
+                  type="button"
+                  role="option"
+                  aria-selected={isSelected}
+                  onClick={() => {
+                    onChange(s);
+                    setOpen(false);
+                  }}
+                  className={`
+                    w-full text-right px-3 py-2 text-sm transition-colors
+                    ${
+                      isSelected
+                        ? 'bg-[var(--opt-selected)] text-[var(--text-main)] dark:text-white'
+                        : 'text-[var(--text-main)] hover:bg-[var(--opt-hover)]'
+                    }
+                  `}
+                >
+                  {s}
+                </button>
+              </li>
+            );
+          })}
         </ul>
       )}
     </div>

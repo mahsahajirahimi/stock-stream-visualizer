@@ -14,7 +14,10 @@ export default function VolumeBar({ data = [] }: Props): JSX.Element {
         <YAxis width={40} stroke="var(--text-muted)" />
         <Tooltip
           cursor={false}
-          contentStyle={{ background: 'var(--card-bg)', border: '1px solid var(--border)' }}
+          contentStyle={{
+            background: 'var(--card-bg)',
+            border: '1px solid var(--border)',
+          }}
         />
         <Bar dataKey="vol" fill="var(--chart-volume)" />
       </BarChart>

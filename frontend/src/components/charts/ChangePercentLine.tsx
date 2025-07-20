@@ -21,17 +21,17 @@ export default function ChangePercentLine({ data = [] }: Props): JSX.Element {
         <XAxis dataKey="t" hide />
 
         <YAxis
-          domain={["auto", "auto"]}
+          domain={['auto', 'auto']}
           tickFormatter={(v: number) => (v * 100).toFixed(1) + '%'}
           width={40}
-          stroke={border}
+          stroke={border} 
           tick={{ fill: border }}
         />
 
         <Tooltip
           cursor={false}
           contentStyle={{ background: cardBg, border: 'none', color: text }}
-          formatter={(v: number) => (v as number * 100).toFixed(2) + '%'}
+          formatter={(v: number) => (v * 100).toFixed(2) + '%'}
         />
 
         <Line

@@ -74,7 +74,3 @@
   background: var(--opt-hover);
 }
 
-.symbol-active {
-  background: var(--opt-selected);
-  color: #fff;
-}

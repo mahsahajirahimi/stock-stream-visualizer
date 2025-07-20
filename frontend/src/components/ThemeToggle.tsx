@@ -1,8 +1,8 @@
-import { useEffect, useState, JSX } from 'react';
+import { useEffect, useState, type JSX } from 'react';
 
 export default function ThemeToggle(): JSX.Element {
   const [dark, setDark] = useState(() =>
-    document.documentElement.classList.contains('dark'),
+    document.documentElement.classList.contains('dark')
   );
 
   useEffect(() => {
@@ -10,8 +10,6 @@ export default function ThemeToggle(): JSX.Element {
     root.classList.toggle('dark', dark);
     localStorage.setItem('theme', dark ? 'dark' : 'light');
   }, [dark]);
-
-  const speed = 'duration-600 ease-in-out';
 
   return (
     <button
@@ -21,7 +19,8 @@ export default function ThemeToggle(): JSX.Element {
     >
       <span
         className={`
-          absolute inset-0 rounded-full transition-colors ${speed}
+          absolute inset-0 rounded-full
+          transition-colors duration-600 ease-in-out
           ${dark ? 'bg-indigo-600/70' : 'bg-amber-300/90'}
         `}
       />
@@ -29,8 +28,8 @@ export default function ThemeToggle(): JSX.Element {
       <span
         className={`
           absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow
-          transition-transform ${speed}
-          ${dark ? 'translate-x-6' : 'translate-x-0'}
+          transition-transform duration-600 ease-in-out
+          ${dark ? 'translate-x-6' : ''}
         `}
       />
 
@@ -38,7 +37,7 @@ export default function ThemeToggle(): JSX.Element {
         className={`
           absolute top-0.5 w-5 h-5 flex items-center justify-center text-[13px]
           pointer-events-none leading-none
-          transition-transform ${speed}
+          transition-all duration-600 ease-in-out
           ${dark ? 'left-0.5' : 'right-0.5'}
         `}
       >
