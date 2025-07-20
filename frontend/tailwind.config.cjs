@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: 'class',          
+  darkMode: 'class',
   content: [
     './index.html',
     './src/**/*.{js,jsx,ts,tsx}',
@@ -10,7 +10,6 @@ module.exports = {
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
       },
-
       keyframes: {
         ping: {
           '75%, 100%': { transform: 'scale(2)', opacity: '0' },
