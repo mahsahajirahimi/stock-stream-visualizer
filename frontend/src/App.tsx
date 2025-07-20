@@ -1,8 +1,8 @@
-import { useState, useEffect, JSX } from 'react';
+import { useState, useEffect, type JSX } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useWebSocket } from './hooks/useWebSocket';
-
-import { DataPoint } from './types';
+import type { DataPoint } from './types';
 
 import SymbolSelector from './components/SymbolSelector';
 import ThemeToggle    from './components/ThemeToggle';
@@ -19,21 +19,21 @@ interface UseWebSocketReturn {
 }
 
 export default function App(): JSX.Element {
+  const { t } = useTranslation();
+
   const { history: wsHistory, isConnected } =
     useWebSocket('ws://localhost:8080') as UseWebSocketReturn;
 
   const symbols = Object.keys(wsHistory);
-  const [symbol, setSymbol] = useState<string>(symbols[0] || '');
+  const [symbol, setSymbol] = useState<string>(symbols[0] ?? '');
 
   useEffect(() => {
-    if (!symbol && symbols.length) {
-      setSymbol(symbols[0]);
-    } else if (symbol && !symbols.includes(symbol) && symbols.length) {
-      setSymbol(symbols[0]);
-    }
+    if (!symbol && symbols.length)         setSymbol(symbols[0]);
+    else if (symbol && !symbols.includes(symbol) && symbols.length)
+                                            setSymbol(symbols[0]);
   }, [symbols, symbol]);
 
-  const data = wsHistory[symbol] || [];
+  const data = wsHistory[symbol] ?? [];
 
   return (
     <>
@@ -42,15 +42,14 @@ export default function App(): JSX.Element {
           fixed inset-x-0 top-0 z-50
           flex items-center gap-3
           px-4 py-3 backdrop-blur
-          bg-[rgba(31,35,61,0.9)] dark:bg-[rgba(15,17,30,0.9)]
         "
         style={{ background: 'var(--header-bg)' }}
       >
         <span
-          className={`
-            w-3 h-3 rounded-full
+          className={`w-3 h-3 rounded-full
             ${isConnected ? 'bg-green-600 animate-ping-slow' : 'bg-red-600'}
           `}
+          title={isConnected ? t('connected') : t('disconnected')}
         />
 
         <ThemeToggle />
@@ -65,19 +64,19 @@ export default function App(): JSX.Element {
 
       <main className="pt-20 p-6 space-y-6 min-h-screen">
         <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
-          <ChartCard title="قیمت پایانی">
+          <ChartCard title={t('chart.closingPrice')}>
             <ClosingPriceLine data={data} />
           </ChartCard>
 
-          <ChartCard title="درصد تغییر قیمت">
+          <ChartCard title={t('chart.changePercent')}>
             <ChangePercentLine data={data} />
           </ChartCard>
 
-          <ChartCard title="حجم معاملات">
+          <ChartCard title={t('chart.volume')}>
             <VolumeBar data={data} />
           </ChartCard>
 
-          <ChartCard title="درصد حجم مبنا">
+          <ChartCard title={t('chart.volPercent')}>
             <VolPercentBar data={data} />
           </ChartCard>
         </div>

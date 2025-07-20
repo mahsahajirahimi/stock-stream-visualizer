@@ -1,0 +1,8 @@
+{
+    "chart": {
+      "closingPrice": "قیمت پایانی",
+      "changePercent": "درصد تغییر قیمت",
+      "volume": "حجم معاملات",
+      "volPercent": "درصد حجم مبنا"
+    }
+  }

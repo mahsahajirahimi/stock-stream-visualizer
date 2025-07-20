@@ -1,31 +1,56 @@
-import { useState, useRef, useEffect, JSX } from 'react';
+import { useState, useRef, useEffect, type JSX } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   symbols: string[];
-  value: string;
+  value:   string;
   onChange: (symbol: string) => void;
   className?: string;
 }
 
-export default function SymbolSelector({ symbols, value, onChange, className = '' }: Props): JSX.Element {
+export default function SymbolSelector({
+  symbols,
+  value,
+  onChange,
+  className = '',
+}: Props): JSX.Element {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const wrapperRef = useRef<HTMLDivElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (wrapperRef.current && !wrapperRef.current.contains(e.target as Node)) setOpen(false);
-    }
-    window.addEventListener('click', handleClickOutside);
-    return () => window.removeEventListener('click', handleClickOutside);
+    const close = (e: MouseEvent | KeyboardEvent) => {
+      if (
+        e instanceof MouseEvent &&
+        wrapRef.current &&
+        !wrapRef.current.contains(e.target as Node)
+      )
+        setOpen(false);
+      if (e instanceof KeyboardEvent && e.key === 'Escape') setOpen(false);
+    };
+    window.addEventListener('click', close);
+    window.addEventListener('keydown', close);
+    return () => {
+      window.removeEventListener('click', close);
+      window.removeEventListener('keydown', close);
+    };
   }, []);
 
   return (
-    <div ref={wrapperRef} className="relative">
+    <div ref={wrapRef} className="relative">
       <button
-        onClick={() => setOpen(!open)}
-        className={`flex items-center justify-between gap-2 px-3 py-[6px] rounded-md text-sm symbol-button ${className}`}
+        type="button"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        onClick={() => setOpen((o) => !o)}
+        className={`
+          flex items-center justify-between gap-2
+          px-3 py-[6px] rounded-md text-sm
+          symbol-button
+          ${className}
+        `}
       >
-        {value || 'انتخاب نماد'}
+        {value || t('selectSymbol')}
         <svg
           className={`w-3 h-3 transition-transform ${open ? 'rotate-180' : ''}`}
           fill="none"
@@ -38,15 +63,24 @@ export default function SymbolSelector({ symbols, value, onChange, className = '
       </button>
 
       {open && (
-        <ul className="symbol-dropdown">
+        <ul
+          role="listbox"
+          className="symbol-dropdown"
+        >
           {symbols.map((s) => (
             <li key={s}>
               <button
+                type="button"
+                role="option"
+                aria-selected={s === value}
                 onClick={() => {
                   onChange(s);
                   setOpen(false);
                 }}
-                className={`w-full text-right px-3 py-2 rounded text-sm ${s === value ? 'symbol-active' : 'symbol-option'}`}
+                className={`
+                  w-full text-right px-3 py-2 rounded text-sm
+                  ${s === value ? 'symbol-active' : 'symbol-option'}
+                `}
               >
                 {s}
               </button>
