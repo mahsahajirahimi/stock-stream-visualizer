@@ -1,16 +1,19 @@
-import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip } from 'recharts';
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+} from 'recharts';
 import type { JSX } from 'react';
 import type { DataPoint } from '@/types';
 
-interface Props {
-  data?: DataPoint[];
-}
+interface Props { data?: DataPoint[] }
 
 export default function ChangePercentLine({ data = [] }: Props): JSX.Element {
-  const series = data.map((d) => ({
-    ...d,
-    pct: d.price ? (d.last - d.price) / d.price : 0,
-  }));
+  const series = data;
+  const fmt = (v: number) => v.toLocaleString('fa-IR');
 
   return (
     <ResponsiveContainer width="100%" height={260}>
@@ -19,25 +22,22 @@ export default function ChangePercentLine({ data = [] }: Props): JSX.Element {
 
         <YAxis
           domain={['auto', 'auto']}
-          tickFormatter={(v: number) => (v * 100).toFixed(1) + '%'}
-          width={40}
-          stroke="var(--border)"          
-          tick={{ fill: 'var(--border)' }}
+          tickFormatter={fmt}
+          width={60}
+          stroke="var(--border)"
+          tick={{ fill: 'var(--border)', fontSize: 15 }}
         />
 
         <Tooltip
           cursor={false}
-          contentStyle={{
-            background: 'var(--card-bg)',
-            border: 'none',
-            color: 'var(--text-main)',
-          }}
-          formatter={(v: number) => (v * 100).toFixed(2) + '%'}
+          contentStyle={{ background: 'var(--card-bg)', border: 'none', color: 'var(--text-main)' }}
+          formatter={(v: number) => fmt(v)}
+          labelFormatter={() => ''}
         />
 
         <Line
-          dataKey="pct"
-          stroke="var(--chart-price)"       
+          dataKey="last"
+          stroke="var(--chart-price)"
           strokeWidth={2}
           dot={false}
           isAnimationActive={false}
