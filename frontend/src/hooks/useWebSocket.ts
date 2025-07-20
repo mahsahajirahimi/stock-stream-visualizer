@@ -1,6 +1,7 @@
-import { useEffect, useState, useRef, } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { toast } from 'react-toastify';
 import { parseMessage } from '@/utils/parseMessage';
+import { useTranslation } from 'react-i18next';
 
 const MAX_POINTS = 30;
 
@@ -19,6 +20,7 @@ export function useWebSocket(url: string): { history: History; isConnected: bool
   const [history, setHistory] = useState<History>({});
   const [isConnected, setConn] = useState(false);
   const wsRef = useRef<WebSocket | null>(null);
+  const { t } = useTranslation(); 
 
   useEffect(() => {
     const ws = new WebSocket(url);
@@ -26,12 +28,14 @@ export function useWebSocket(url: string): { history: History; isConnected: bool
 
     ws.onopen = () => {
       setConn(true);
-      toast.dismiss('ws-error');
+      toast.dismiss('ws-error'); 
     };
 
     const handleDisconnect = () => {
       setConn(false);
-      toast.error('اتصال وب‌سوکت قطع شد', { toastId: 'ws-error' });
+      toast.error(t('errors.websocketDisconnect'), {
+        toastId: 'ws-error',
+      });
     };
 
     ws.onclose = handleDisconnect;
@@ -75,7 +79,7 @@ export function useWebSocket(url: string): { history: History; isConnected: bool
     return () => {
       ws.close();
     };
-  }, [url]);
+  }, [url, t]);
 
   return { history, isConnected };
 }

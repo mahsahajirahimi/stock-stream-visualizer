@@ -4,6 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { useWebSocket } from './hooks/useWebSocket';
 import type { DataPoint } from './types';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import SymbolSelector from './components/SymbolSelector';
 import ThemeToggle    from './components/ThemeToggle';
 
@@ -46,10 +49,10 @@ export default function App(): JSX.Element {
         style={{ background: 'var(--header-bg)' }}
       >
         <span
-          className={`w-3 h-3 rounded-full
+          className={`
+            w-3 h-3 rounded-full
             ${isConnected ? 'bg-green-600 animate-ping-slow' : 'bg-red-600'}
           `}
-          title={isConnected ? t('connected') : t('disconnected')}
         />
 
         <ThemeToggle />
@@ -81,6 +84,7 @@ export default function App(): JSX.Element {
           </ChartCard>
         </div>
       </main>
+      <ToastContainer />  
     </>
   );
 }
