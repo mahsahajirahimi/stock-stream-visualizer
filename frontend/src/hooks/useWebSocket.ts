@@ -2,8 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { toast } from 'react-toastify';
 import { parseMessage } from '@/utils/parseMessage';
 import { useTranslation } from 'react-i18next';
-
-const MAX_POINTS = 30;
+import { MAX_POINTS } from '@/constants';
 
 export interface DataPoint {
   t: number;
