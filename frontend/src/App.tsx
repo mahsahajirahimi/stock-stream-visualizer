@@ -41,20 +41,19 @@ export default function App(): JSX.Element {
   return (
     <>
       <header
-        className="
+        className={`
           fixed inset-x-0 top-0 z-50
           flex items-center gap-3
           px-4 py-3 backdrop-blur
-        "
-        style={{ background: 'var(--header-bg)' }}
+          bg-[var(--header-bg)]
+        `}
       >
-        <span
-          className={`
-            w-3 h-3 rounded-full
-            ${isConnected ? 'bg-green-600 animate-ping-slow' : 'bg-red-600'}
-          `}
-        />
-
+      <span
+        className={`
+          w-3 h-3 rounded-full
+          ${isConnected ? 'bg-green-600 animate-ping-slow' : 'bg-red-600'}
+        `}
+      />
         <ThemeToggle />
 
         <SymbolSelector

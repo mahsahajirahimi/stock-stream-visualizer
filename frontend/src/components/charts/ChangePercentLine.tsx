@@ -1,6 +1,5 @@
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip } from 'recharts';
 import { JSX } from 'react';
-import { theme } from '@/theme';
 import { DataPoint } from '@/types';
 
 interface Props {
@@ -8,8 +7,6 @@ interface Props {
 }
 
 export default function ChangePercentLine({ data = [] }: Props): JSX.Element {
-  const { border, cardBg, text } = (theme.colors as any);
-
   const series = data.map((d) => ({
     ...d,
     pct: d.price ? (d.last - d.price) / d.price : 0,
@@ -24,19 +21,23 @@ export default function ChangePercentLine({ data = [] }: Props): JSX.Element {
           domain={['auto', 'auto']}
           tickFormatter={(v: number) => (v * 100).toFixed(1) + '%'}
           width={40}
-          stroke={border} 
-          tick={{ fill: border }}
+          stroke="var(--border)"             
+          tick={{ fill: 'var(--border)' }}
         />
 
         <Tooltip
           cursor={false}
-          contentStyle={{ background: cardBg, border: 'none', color: text }}
+          contentStyle={{
+            background: 'var(--card-bg)',
+            border: 'none',
+            color: 'var(--text-main)',
+          }}
           formatter={(v: number) => (v * 100).toFixed(2) + '%'}
         />
 
         <Line
           dataKey="pct"
-          stroke="var(--chart-price)"
+          stroke="var(--chart-price)"            
           strokeWidth={2}
           dot={false}
           isAnimationActive={false}

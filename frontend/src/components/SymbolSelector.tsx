@@ -46,8 +46,8 @@ export default function SymbolSelector({
         className={`
           flex items-center justify-between gap-2
           px-3 py-[6px] rounded-md text-sm
-          border border-[var(--border)] bg-[var(--card-bg)] text-[var(--text-main)]
-          hover:bg-[var(--dd-hover)] transition-colors
+          border border-(--border) bg-(--card-bg) text-(--text-main)
+          hover:bg-(--dd-hover) transition-colors
           ${className}
         `}
       >
@@ -68,7 +68,7 @@ export default function SymbolSelector({
           role="listbox"
           className={`
             absolute z-50 mt-1 w-full max-h-48 overflow-auto rounded-md
-            bg-[var(--dd-bg)] shadow-lg border border-[var(--border)]
+            bg-(--dd-bg) shadow-lg border border-(--border)
           `}
         >
           {symbols.map((s) => {
@@ -87,8 +87,8 @@ export default function SymbolSelector({
                     w-full text-right px-3 py-2 text-sm transition-colors
                     ${
                       isSelected
-                        ? 'bg-[var(--opt-selected)] text-[var(--text-main)] dark:text-white'
-                        : 'text-[var(--text-main)] hover:bg-[var(--opt-hover)]'
+                        ? 'bg-(--opt-selected) text-(--text-main) dark:text-white'
+                        : 'text-(--text-main) hover:bg-(--opt-hover)'
                     }
                   `}
                 >
