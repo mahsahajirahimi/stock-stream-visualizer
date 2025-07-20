@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, JSX } from 'react';
 
-export default function ThemeToggle() {
+export default function ThemeToggle(): JSX.Element {
   const [dark, setDark] = useState(() =>
-    document.documentElement.classList.contains('dark')
+    document.documentElement.classList.contains('dark'),
   );
 
   useEffect(() => {

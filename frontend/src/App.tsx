@@ -1,5 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, JSX } from 'react';
+
 import { useWebSocket } from './hooks/useWebSocket';
+
+import { DataPoint } from './types';
 
 import SymbolSelector from './components/SymbolSelector';
 import ThemeToggle    from './components/ThemeToggle';
@@ -10,17 +13,24 @@ import ChangePercentLine from './components/charts/ChangePercentLine';
 import VolumeBar         from './components/charts/VolumeBar';
 import VolPercentBar     from './components/charts/VolPercentBar';
 
-export default function App() {
+interface UseWebSocketReturn {
+  history: Record<string, DataPoint[]>;
+  isConnected: boolean;
+}
 
-  const { history: wsHistory, isConnected } = useWebSocket('ws://localhost:8080');
+export default function App(): JSX.Element {
+  const { history: wsHistory, isConnected } =
+    useWebSocket('ws://localhost:8080') as UseWebSocketReturn;
 
   const symbols = Object.keys(wsHistory);
-  const [symbol, setSymbol] = useState(symbols[0] || '');
+  const [symbol, setSymbol] = useState<string>(symbols[0] || '');
 
   useEffect(() => {
-    if (!symbol && symbols.length) setSymbol(symbols[0]);
-    else if (symbol && !symbols.includes(symbol) && symbols.length)
+    if (!symbol && symbols.length) {
       setSymbol(symbols[0]);
+    } else if (symbol && !symbols.includes(symbol) && symbols.length) {
+      setSymbol(symbols[0]);
+    }
   }, [symbols, symbol]);
 
   const data = wsHistory[symbol] || [];
@@ -34,9 +44,8 @@ export default function App() {
           px-4 py-3 backdrop-blur
           bg-[rgba(31,35,61,0.9)] dark:bg-[rgba(15,17,30,0.9)]
         "
-        style={{ background: "var(--header-bg)" }}  
+        style={{ background: 'var(--header-bg)' }}
       >
-      
         <span
           className={`
             w-3 h-3 rounded-full
