@@ -1,0 +1,76 @@
+:root {
+
+  --bg-grad-from: #e6d4c4;  
+  --bg-grad-to:   #e6d4c4;
+  --card-bg:      #f8edf3;   
+  --header-bg:    #ddbba0;
+
+  --text-main:  #1f2937;
+  --text-muted: #6b7280;
+  --border:     rgba(0,0,0,.5);
+
+
+  --chart-price:   #f8a046;  
+  --chart-change:  #54b8e3;  
+  --chart-volume:  #a885ad;  
+  --chart-volpct:  #a3bdc7; 
+  
+  --dd-bg        : #f8edf3;   
+  --dd-hover     : #e7dbe9;  
+  --opt-hover    : #e1d1c2;  
+  --opt-selected : #f8a046; 
+}
+
+.dark {
+  --bg-grad-from: #0b0f2a;
+  --bg-grad-to:   #0b0f2a;
+  --card-bg:      #1e2754;
+  --header-bg:    #161c3a;
+
+  --text-main:  #f3f4ff;
+  --text-muted: #94a3b8;
+  --border:     rgba(255,255,255,.5);
+
+  --chart-price:   #e66615;
+  --chart-change:  #5a25b3;
+  --chart-volume:  #d948a7;
+  --chart-volpct:  #03d896;
+
+  --dd-bg        : #374151;   
+  --dd-hover     : #4b5563;   
+  --opt-hover    : #434c5e;  
+  --opt-selected : #4f46e5; 
+}
+
+.symbol-button {
+  background:  var(--dd-bg);
+  color:       var(--text-main);
+  border:      1px solid var(--border);
+  box-shadow:  0 1px 3px rgba(0,0,0,.08);
+  transition:  background .15s;
+}
+.symbol-button:hover {
+  background: var(--dd-hover);
+}
+
+.symbol-dropdown {
+  position:   absolute;
+  inset-inline: 0 auto;
+  margin-top: .25rem;        
+  max-height: 15rem;
+  overflow:   auto;
+  background: var(--dd-bg);
+  border:     1px solid var(--border);
+  border-radius: .375rem;    
+  box-shadow: 0 8px 24px rgba(0,0,0,.10);
+  backdrop-filter: blur(6px);
+  z-index: 50;
+}
+
+.symbol-option {
+  color: var(--text-main);
+}
+.symbol-option:hover {
+  background: var(--opt-hover);
+}
+

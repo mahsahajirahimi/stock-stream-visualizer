@@ -1,0 +1,12 @@
+{
+    "chart": {
+      "closingPrice": "قیمت پایانی",
+      "changePercent": "درصد تغییر قیمت",
+      "volume": "حجم معاملات",
+      "volPercent": "درصد حجم مبنا"
+    },
+    
+    "errors": {
+    "websocketDisconnect": "اتصال وب‌سوکت قطع شد"
+  }
+  }
